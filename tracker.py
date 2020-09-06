@@ -7,7 +7,8 @@ websiteURL= "https://www.ebay.com/itm/Samsung-Galaxy-S20-Ultra-SM-G9880-256GB-12
 header = {"User Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36"}
 
 price = 0.0
-
+sender_email = "sidspricenotifier@gmail.com"
+recv_email = "agrawa96@purdue.edu"
 def ebay():
     pg=requests.get(websiteURL, headers=header)
     soup = BeautifulSoup(pg.content, "html.parser")
@@ -22,7 +23,13 @@ def ebay():
     print("The latest price is: "+p)
 
 def notify_me():
-    server= smtplib.
+    password = input(str("Enter the password : "))
+    message = "Please check out " + websiteURL + ". It's price has dropped!" + "The latest price is: "+p
+    server= smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender_email, password)
+    server.sendmail(sender_email,recv_email,message)
 
+    server.login()
 ebay()
 notify_me()
