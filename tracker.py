@@ -8,7 +8,9 @@ header = {"User Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53
 
 price = 0.0
 sender_email = "sidspricenotifier@gmail.com"
-recv_email = "agrawa96@purdue.edu"
+recv_email = "sidharthaagrawal5@gmail.com"
+
+
 def ebay():
     pg=requests.get(websiteURL, headers=header)
     soup = BeautifulSoup(pg.content, "html.parser")
@@ -18,18 +20,21 @@ def ebay():
     p = soup.find(id="prcIsum").get_text()
     price = float(p[4:])
 
-    print("Fetching latest price of product: "+product)
-
-    print("The latest price is: "+p)
+    if price > 800:
+        notify_me()
 
 def notify_me():
-    password = input(str("Enter the password : "))
-    message = "Please check out " + websiteURL + ". It's price has dropped!" + "The latest price is: "+p
-    server= smtplib.SMTP('smtp.gmail.com', 587)
+    fromaddr = 'sidspricenotifier@gmail.com'  
+    toaddrs  = 'abcd@xyz.com'  
+    msg = "Hey, please checkout " + websiteURL
+    password = 'Jainepal1!'
+    
+    server = smtplib.SMTP('smtp.gmail.com', 587)  
+    server.ehlo()
     server.starttls()
-    server.login(sender_email, password)
-    server.sendmail(sender_email,recv_email,message)
+    server.login(fromaddr, password)  
+    server.sendmail(fromaddr, toaddrs, msg)  
+    server.quit()
 
-    server.login()
-ebay()
-notify_me()
+while True:
+    ebay()
