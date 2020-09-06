@@ -8,4 +8,12 @@ header = {"User Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/53
 pg=requests.get(websiteURL, headers=header)
 soup = BeautifulSoup(pg.content, "html.parser")
 
-print(soup.prettify())
+product = soup.find(id="itemTitle").get_text()
+p = soup.find(id="prcIsum").get_text()
+price = p[3]
+
+print("Fetching latest price of product: "+product)
+
+print("The latest price is: "+p)
+
+print(p)
